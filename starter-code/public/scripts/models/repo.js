@@ -6,7 +6,7 @@ var app = app || {};
 
   repos.all = [];
 
-  repos.requestRepos = function(callback) {
+  repos.requestRepos = function(/*callback*/) {
     // TODO: How would you like to fetch your repos? Don't forget to call the callback.
     //       Remember that the callback function we'll want to call relies on repos.all
     //       being an array with a bunch of repo objects in it, so you'll need to
@@ -19,11 +19,12 @@ var app = app || {};
       .then(
       // render the data
         data => {
-          data.forEach(repo => repos.all.push(repo))
+          data.forEach(repo => repos.all.push(repo));
+          console.log(repos.all);
         }
       );
 
-    callback();
+    /*callback();*/
   };
 
   // REVIEW: Model method that filters the full collection for repos with a particular attribute.
