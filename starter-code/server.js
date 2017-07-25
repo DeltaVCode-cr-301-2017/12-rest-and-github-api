@@ -6,6 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const app = express();
+const requestProxy = require('express-request-proxy');
 
 // const conString = 'postgres://USERNAME:PASSWORD@HOST:PORT';
 const githubToken = process.env.GITHUB_TOKEN || '1cfe71a7ad14ee3e5872adefe24a63d7cd0c2347';
@@ -27,6 +28,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('./public'));
 
+app.get('/github/*', proxyGitHub);
 app.get('/new', (request, response) => response.sendFile('new.html', {root: './public'}));
 app.get('/admin', (request, response) => response.sendFile('admin.html', {root: './public'}));
 app.get('/articles', (request, response) => {
