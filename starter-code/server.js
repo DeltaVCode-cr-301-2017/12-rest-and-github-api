@@ -6,8 +6,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const app = express();
+
 // const conString = 'postgres://USERNAME:PASSWORD@HOST:PORT';
-const conString = ''; // TODO: Don't forget to set your own conString
+const githubToken = process.env.GITHUB_TOKEN || '1cfe71a7ad14ee3e5872adefe24a63d7cd0c2347';
+
+function proxyGitHub(request, response){
+  console.log(`Routing GitHub request for ${request.params[0]}`);
+  (requestProxy({
+    url: `https://api.github.com/${request.params[0]}`,
+    headers: { Authorization: `token ${githubToken}`}
+  }))(request, response);
+}
+
+const conString = 'postgres://:5432/kilovolt'; // DONE: Don't forget to set your own conString
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', err => console.error(err));
