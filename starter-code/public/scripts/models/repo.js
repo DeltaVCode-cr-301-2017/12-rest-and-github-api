@@ -10,15 +10,20 @@ var app = app || {};
 
     $('#about').show().siblings().hide(); // REVIEW: We have a slight refactor in selectors here, which has reduced the amount of code from the last lab.
     $.ajax({
-      url: 'http://www.github.com/user/repos',
+      url: 'http://api.github.com/users/dustinyschild/repos',
       method: 'GET',
+      headers: {
+
+      }
     })
-    
-    // TODO: How would you like to fetch your repos? Don't forget to call the callback.
+    .then(function(result){
+      repos.all = result;
+    // DONE: How would you like to fetch your repos? Don't forget to call the callback.
     //       Remember that the callback function we'll want to call relies on repos.all
     //       being an array with a bunch of repo objects in it, so you'll need to
     //       populate it with the response from Github before you call the callback.
-    callback();
+      callback();
+    });
   };
 
   // REVIEW: Model method that filters the full collection for repos with a particular attribute.
