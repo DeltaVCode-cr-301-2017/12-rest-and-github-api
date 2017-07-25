@@ -18,7 +18,7 @@ function proxyGitHub(request, response){
   }))(request, response);
 }
 
-const conString = 'postgres://:5432/kilovolt'; // DONE: Don't forget to set your own conString
+const conString = 'postgres://postgres:deltav301@localhost:5432/kilovolt'; // DONE: Don't forget to set your own conString
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', err => console.error(err));

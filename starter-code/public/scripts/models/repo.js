@@ -20,8 +20,8 @@ var app = app || {};
       // render the data
         data => {
           data.forEach(repo => repos.all.push(repo));
-          callback();
           console.log(repos.all);
+          callback();
         }
       );
   };
