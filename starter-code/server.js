@@ -6,8 +6,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const app = express();
+const requestProxy = require('express-request-proxy');
+const gt = '1cfe71a7ad14ee3e5872adefe24a63d7cd0c2347'
 // const conString = 'postgres://USERNAME:PASSWORD@HOST:PORT';
-const conString = ''; // TODO: Don't forget to set your own conString
+
+function proxyGitHub(request, response){
+  console.log(`Routing GitHub request for ${request.params[0]}`);
+  (requestProxy({
+    url: `https://api.github.com/${request.params[0]}`,
+    headers: { Authorization: `token ${gt}`}
+  }))(request, response);
+}
+
+const conString = 'postgres://postgres:deltav301@localhost:5432/kilovolt'; // DONE: Don't forget to set your own conString
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', err => console.error(err));
@@ -16,6 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('./public'));
 
+app.get('/github/*', proxyGitHub);
 app.get('/new', (request, response) => response.sendFile('new.html', {root: './public'}));
 app.get('/admin', (request, response) => response.sendFile('admin.html', {root: './public'}));
 app.get('/articles', (request, response) => {
