@@ -14,7 +14,7 @@ var app = app || {};
 
   // TODO: Remember that new Handlebars template? Let's compile it!
   // Save the result in this `render` variable.
-
+  
   var template = $('#repo-template').html();
   const render = Handlebars.compile(template);
 

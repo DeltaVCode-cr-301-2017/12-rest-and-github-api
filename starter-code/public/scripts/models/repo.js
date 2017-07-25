@@ -6,7 +6,15 @@ var app = app || {};
 
   repos.all = [];
 
+
+
   repos.requestRepos = function(callback) {
+
+    $('#about').show().siblings().hide(); // REVIEW: We have a slight refactor in selectors here, which has reduced the amount of code from the last lab.
+    $.ajax({
+      url: 'http://www.github.com/user/repos',
+      method: 'GET',
+    })
     // TODO: How would you like to fetch your repos? Don't forget to call the callback.
     //       Remember that the callback function we'll want to call relies on repos.all
     //       being an array with a bunch of repo objects in it, so you'll need to
